@@ -1,5 +1,3 @@
-package main;
-
 import control.algorithms.Statistics;
 import control.csv.CSVTools;
 import control.kinect.Kinect;

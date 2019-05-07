@@ -1,5 +1,3 @@
-package control.algorithms;
-
 import processing.core.PApplet;
 import processing.core.PVector;
 

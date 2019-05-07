@@ -1,5 +1,3 @@
-package model;
-
 import control.kinect.Kinect;
 import control.kinect.KinectAnathomy;
 import processing.core.PApplet;

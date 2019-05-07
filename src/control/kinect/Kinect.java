@@ -1,5 +1,3 @@
-package control.kinect;
-
 import kinect4WinSDK.SkeletonData;
 import processing.core.PApplet;
 import processing.core.PImage;
