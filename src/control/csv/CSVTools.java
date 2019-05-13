@@ -1,3 +1,5 @@
+package control.csv;
+
 import control.kinect.KinectAnathomy;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;

@@ -1,7 +1,36 @@
+package control.algorithms;
+
+import control.kinect.KinectAnathomy;
+import model.postures.DancerData;
 import processing.core.PApplet;
 import processing.core.PVector;
 
 public class Transformation {
+    public static DancerData translateToOrigin(PApplet parent, DancerData dd) {
+        DancerData res = new DancerData(parent);
+
+        PVector vSpine = dd.getAnathomyVector(KinectAnathomy.SPINE);
+
+        for (KinectAnathomy ka :
+                KinectAnathomy.values()) {
+            if (!KinectAnathomy.LABEL.equals(ka) && !KinectAnathomy.NOT_TRACKED.equals(ka)
+                    && !KinectAnathomy.SPINE.equals(ka)) {
+                PVector v = dd.getAnathomyVector(ka);
+
+                if (v != null) {
+                    PVector out = new PVector();
+                    out.x = v.x;
+                    out.y = v.y;
+                    out.z = v.z;
+                    out.sub(vSpine);
+                    res.getAnathomyData().put(ka, v);
+                }
+            }
+        }
+
+        return res;
+    }
+
     public static PVector translate(PVector v, float x, float y, float z) {
         v.x += x;
         v.y += y;

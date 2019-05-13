@@ -1,7 +1,8 @@
 package control.algorithms;
 
 import control.kinect.KinectAnathomy;
-import model.DancerData;
+import model.postures.DancerData;
+import processing.core.PApplet;
 import processing.core.PVector;
 
 import java.util.ArrayList;
@@ -9,6 +10,23 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Statistics {
+    public static Float totalError(PApplet parent, DancerData pk, DancerData pCSV) {
+        DancerData pkCenter = Transformation.translateToOrigin(parent, pk);
+        DancerData pCSVCenter = Transformation.translateToOrigin(parent, pCSV);
+
+        Float result = new Float(0.f);
+
+        for (KinectAnathomy ka:
+                KinectAnathomy.values()) {
+            if (!KinectAnathomy.LABEL.equals(ka) && !KinectAnathomy.NOT_TRACKED.equals(ka)) {
+                PVector kv = pkCenter.getAnathomyVector(ka);
+                PVector CSVv = pCSVCenter.getAnathomyVector(ka);
+                if (kv != null && CSVv != null) result += CSVv.dist(kv);
+            }
+        }
+        return result;
+    }
+
     public static PVector mean(DancerData dd) {
         List<PVector> data = extractPoints(dd);
         return getAvarage(data);

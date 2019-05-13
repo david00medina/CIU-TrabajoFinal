@@ -1,3 +1,5 @@
+package control.kinect;
+
 import control.algorithms.Transformation;
 import kinect4WinSDK.Kinect;
 import kinect4WinSDK.SkeletonData;
