@@ -6,28 +6,24 @@ import processing.core.PApplet;
 import processing.core.PVector;
 
 public class Transformation {
-    public static DancerData translateToOrigin(PApplet parent, DancerData dd) {
+    public static DancerData translateToOrigin(PApplet parent, DancerData dd, KinectAnathomy kaRef) {
+        if (dd == null) return null;
+
         DancerData res = new DancerData(parent);
 
-        PVector vSpine = dd.getAnathomyVector(KinectAnathomy.SPINE);
+        PVector refPoint = dd.getAnathomyVector(kaRef);
+
+        if (refPoint == null) return dd;
+
+        PVector v1 = new PVector(refPoint.x, refPoint.y, refPoint.z);
 
         for (KinectAnathomy ka :
                 KinectAnathomy.values()) {
-            if (!KinectAnathomy.LABEL.equals(ka) && !KinectAnathomy.NOT_TRACKED.equals(ka)
-                    && !KinectAnathomy.SPINE.equals(ka)) {
+            if (!KinectAnathomy.LABEL.equals(ka) && !KinectAnathomy.NOT_TRACKED.equals(ka)) {
                 PVector v = dd.getAnathomyVector(ka);
-
-                if (v != null) {
-                    PVector out = new PVector();
-                    out.x = v.x;
-                    out.y = v.y;
-                    out.z = v.z;
-                    out.sub(vSpine);
-                    res.getAnathomyData().put(ka, v);
-                }
+                if (v != null) v.sub(v1);
             }
         }
-
         return res;
     }
 

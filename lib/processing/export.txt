@@ -1,4 +1,3 @@
-
 # If you want to support more platforms, visit jogamp.org to get the 
 # natives libraries for the platform in question (i.e. Solaris). 
 

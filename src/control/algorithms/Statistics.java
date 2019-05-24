@@ -10,21 +10,20 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Statistics {
-    public static Float totalError(PApplet parent, DancerData pk, DancerData pCSV) {
-        DancerData pkCenter = Transformation.translateToOrigin(parent, pk);
-        DancerData pCSVCenter = Transformation.translateToOrigin(parent, pCSV);
-
-        Float result = new Float(0.f);
+    public static Double euclideanMSE(PApplet parent, DancerData pk, DancerData pCSV) {
+        Double result = .0;
+        Double totalPoints = .0;
 
         for (KinectAnathomy ka:
                 KinectAnathomy.values()) {
             if (!KinectAnathomy.LABEL.equals(ka) && !KinectAnathomy.NOT_TRACKED.equals(ka)) {
-                PVector kv = pkCenter.getAnathomyVector(ka);
-                PVector CSVv = pCSVCenter.getAnathomyVector(ka);
-                if (kv != null && CSVv != null) result += CSVv.dist(kv);
+                PVector kv = pk.getAnathomyVector(ka);
+                PVector CSVv = pCSV.getAnathomyVector(ka);
+                if (kv != null && CSVv != null) result += Math.pow(PVector.dist(kv, CSVv), 2);
+                totalPoints += 1.;
             }
         }
-        return result;
+        return result / totalPoints;
     }
 
     public static PVector mean(DancerData dd) {

@@ -31,8 +31,10 @@ public class DancerData {
         anathomyData = new HashMap<>();
         for (KinectAnathomy ka :
                 KinectAnathomy.values()) {
-            if (!KinectAnathomy.LABEL.equals(ka) && !KinectAnathomy.NOT_TRACKED.equals(ka))
-                anathomyData.put(ka, kinect.getSkelPos(ka));
+            if (!KinectAnathomy.LABEL.equals(ka) && !KinectAnathomy.NOT_TRACKED.equals(ka)) {
+                PVector skelPos = kinect.getSkelPos(ka);
+                if (skelPos != null) anathomyData.put(ka, new PVector(skelPos.x, skelPos.y, skelPos.z));
+            }
         }
     }
 
@@ -48,7 +50,7 @@ public class DancerData {
         return anathomyData.get(ka);
     }
 
-    public void printDancer() {
+    public void drawDancerData() {
         if (!anathomyData.isEmpty()) {
             // Body
             drawBody();
@@ -101,6 +103,7 @@ public class DancerData {
         drawBone(anathomyData.get(KinectAnathomy.SPINE), anathomyData.get(KinectAnathomy.HIP_CENTER));
         drawBone(anathomyData.get(KinectAnathomy.HIP_CENTER), anathomyData.get(KinectAnathomy.HIP_LEFT));
         drawBone(anathomyData.get(KinectAnathomy.HIP_CENTER), anathomyData.get(KinectAnathomy.HIP_RIGHT));
+        drawBone(anathomyData.get(KinectAnathomy.HIP_LEFT), anathomyData.get(KinectAnathomy.HIP_RIGHT));
     }
 
     private void drawBone(PVector v1, PVector v2) {

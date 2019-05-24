@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 class MainScreen extends Screen
 {
-    private PApplet parent;
     private PImage titulo;
     private ArrayList<String> SongsNames;
     private ArrayList<Song> Songs;
@@ -18,6 +17,8 @@ class MainScreen extends Screen
 
     MainScreen(PApplet parent, String directory)
     {
+        super(parent);
+
         this.parent = parent;
         SongsNames = new ArrayList<String>();
         Songs = new ArrayList<Song>();
@@ -193,9 +194,9 @@ class MainScreen extends Screen
         return currentSong;
     }
     // No se si se necesita
-    public Song getCurrentSong(int id)
+    public Song getCurrentSong()
     {
-        return Songs.get(id);
+        return Songs.get(currentSong);
     }
 }
 
