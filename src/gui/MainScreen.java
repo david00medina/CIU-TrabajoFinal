@@ -6,6 +6,7 @@ import processing.core.PImage;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 class MainScreen extends Screen
 {
@@ -15,14 +16,14 @@ class MainScreen extends Screen
     private int currentSong = 0;
     private int numOfSongs = 0;
 
-    MainScreen(PApplet parent, String directory)
+    MainScreen(PApplet parent, HashMap<UISelector, PImage> UIResources, String directory)
     {
-        super(parent);
+        super(parent, UIResources);
 
         this.parent = parent;
         SongsNames = new ArrayList<String>();
         Songs = new ArrayList<Song>();
-        titulo = parent.loadImage(".\\res\\images\\titulo.png");
+        titulo = UIResources.get(UISelector.TITLE);
         File f = null;
         String[] paths;
         try
@@ -150,12 +151,12 @@ class MainScreen extends Screen
         parent.triangle(parent.width - parent.width / 5.5f, parent.height/1.35f, parent.width - parent.width / 4.5f, parent.height/1.35f - parent.height / 26, parent.width - parent.width / 4.5f, parent.height/1.35f + parent.height / 26);
 
     }
-    public Boolean mouseOverButtonJugar()
+    Boolean mouseOverButtonJugar()
     {
         return parent.mouseX >= parent.width/2 - parent.width / 14 && parent.mouseX <= parent.width/2 + parent.width / 14
                 && parent.mouseY >= parent.height/1.125f - parent.height / 24 && parent.mouseY <= parent.height/1.125f + parent.height / 24;
     }
-    public Boolean mouseOverButtonPrevious()
+    Boolean mouseOverButtonPrevious()
     {
         if (currentSong == 0)
             return false;
@@ -165,7 +166,7 @@ class MainScreen extends Screen
                 && parent.mouseY >= parent.height/1.35f - parent.height / 26 + (parent.height / 26 * coef)
                 && parent.mouseY <= parent.height/1.35f + parent.height / 26 - (parent.height / 26 * coef);
     }
-    public Boolean mouseOverButtonNext()
+    Boolean mouseOverButtonNext()
     {
         if (currentSong == numOfSongs - 1)
             return false;
@@ -179,12 +180,12 @@ class MainScreen extends Screen
     {
         return numOfSongs;
     }
-    public void setNextSong()
+    void setNextSong()
     {
         Songs.get(currentSong).stop();
         Songs.get(++currentSong).play();
     }
-    public void setPreviousSong()
+    void setPreviousSong()
     {
         Songs.get(currentSong).stop();
         Songs.get(--currentSong).play();
@@ -194,7 +195,7 @@ class MainScreen extends Screen
         return currentSong;
     }
     // No se si se necesita
-    public Song getCurrentSong()
+    Song getCurrentSong()
     {
         return Songs.get(currentSong);
     }

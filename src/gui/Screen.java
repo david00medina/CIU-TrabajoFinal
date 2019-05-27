@@ -6,6 +6,7 @@ import control.kinect.KinectAnathomy;
 import model.postures.DancerData;
 import org.apache.commons.csv.CSVFormat;
 import processing.core.PApplet;
+import processing.core.PImage;
 import processing.core.PVector;
 
 import java.nio.file.Paths;
@@ -16,15 +17,18 @@ import java.util.List;
 abstract class Screen
 {
     protected PApplet parent;
+    protected HashMap<UISelector, PImage> UIResources;
     private String DANCE_POSTURES_CSV_FILE;
 
-    Screen(PApplet parent, String DANCE_POSTURES_CSV_FILE) {
+    Screen(PApplet parent, HashMap<UISelector, PImage> UIResources, String DANCE_POSTURES_CSV_FILE) {
         this.parent = parent;
+        this.UIResources = UIResources;
         this.DANCE_POSTURES_CSV_FILE = DANCE_POSTURES_CSV_FILE;
     }
 
-    Screen(PApplet parent) {
+    Screen(PApplet parent, HashMap<UISelector, PImage> UIResources) {
         this.parent = parent;
+        this.UIResources = UIResources;
     }
 
     abstract void show();

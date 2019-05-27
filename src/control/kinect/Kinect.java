@@ -27,6 +27,8 @@ public class Kinect {
     private final int xOffset = -15;
     private final int yOffset = 30;
 
+    private PImage mask;
+
     public Kinect(PApplet parent, PVector pos, Float scale, Float[] skeletonRGB) {
         this.parent = parent;
         kinect = new kinect4WinSDK.Kinect(this.parent);
@@ -238,8 +240,24 @@ public class Kinect {
             i = 1;
         }
 
+
         PVector joint1 = skelPositions.get(_j1);
         PVector joint2 = skelPositions.get(_j2);
+
+        if (KinectAnathomy.HEAD.equals(_j1) && joint1 != null) {
+            parent.pushMatrix();
+            parent.translate(joint1.x, joint1.y, joint1.z);
+            if (mask == null) {
+                parent.pushStyle();
+                parent.fill(255, 255, 0);
+                parent.ellipse(0, 0, 35, 50);
+                parent.popStyle();
+            } else {
+                parent.imageMode(parent.CENTER);
+                parent.image(mask,0,0);
+            }
+            parent.popMatrix();
+        }
 
         if (joint1 != null && joint2 != null) {
             parent.line(joint1.x, joint1.y, joint1.z,
@@ -296,5 +314,9 @@ public class Kinect {
 
     public void doSkeleton(boolean b) {
         doSkeleton = b;
+    }
+
+    public void setMask(PImage mask) {
+        this.mask = mask;
     }
 }
